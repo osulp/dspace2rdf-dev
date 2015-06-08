@@ -12,15 +12,6 @@
 @prefix edm: <http://www.europeana.eu/schemas/edm/>.
 @prefix ore: <http://www.openarchives.org/ore/terms/>.
 
-### DSpace mapping to Portland Common Data Model (PCDM) draft
-### pcdm:object -> DSpace item
-### pcdm:object -> DSpace bitstream object
-### pcdm:file -> DSpace bitstream file
-### item: handle/thehandle
-### bitstream object: bitstream/handle/thehandle
-### bitstream file: filename
-### sequence?
-
 map:items
     rr:logicalTable <#item-view>;
     rr:subjectMap [
@@ -328,30 +319,6 @@ map:dc-type
 	mfr.element='rights' AND
 	mfr.qualifier IS NULL
     """.
-
-#<#bitstream-view>
-#	rr:sqlQuery """
-#	SELECT h.handle AS thehandle, b.sequence_id AS sequence_id, bfr.mimetype AS mimetype, mv.text_value AS text_value, b.name AS filename FROM 
-#	handle AS h, item AS i, item2bundle AS ib, bundle2bitstream AS bb, bitstream AS b, community2collection, bundle AS bundle, metadataschemaregistry AS msr, metadatafieldregistry AS mfr, bitstreamformatregistry AS bfr
-#	WHERE h.resource_id = i.item_id AND i.withdrawn = 'f'
-#	AND h.resource_type_id = 2
-#	AND h.resource_id = ib.item_id
-#	AND i.item_id = ib.item_id
-#	AND ib.bundle_id = bb.bundle_id
-#	AND bb.bitstream_id = b.bitstream_id
-#	AND bundle.bundle_id=ib.bundle_id 
-#	AND bundle.name='ORIGINAL' 
-#	AND b.deleted = 'f'
-#	AND msr.metadata_schema_id=mfr.metadata_schema_id 
-#	AND mfr.metadata_field_id=mv.metadata_field_id 
-#	AND mv.text_value is not null
-#	AND i.item_id=mv.item_id	
-#	AND msr.namespace='http://dublincore.org/documents/dcmi-terms/' 
-#	AND mfr.element='rights' 
-#	AND mfr.qualifier IS NULL
-#	AND community2collection.community_id = 10
-#	AND community2collection.collection_id = i.owning_collection
-#	""".
 
 <#dc-contributor-committeemember-view>
     rr:sqlQuery """
