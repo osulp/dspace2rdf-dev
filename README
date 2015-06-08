@@ -1,0 +1,9 @@
+Mappings and results of converting Dspace (RDB) to RDF/LDP
+
+System requirement
+- A version of D2RQ that supports R2RML mapping: http://download.d2rq.org/d2rq-r2rml-preview-v4.tar.gz
+
+How to run
+- update the dspace-r2rml-mapping.ttl based on your schema and data
+- cd your_d2rq_installed_directory
+- ./dump-rdf -u dspace_db_user -p dspace_db_passwd -f TURTLE -j jdbc:postgresql://dspace_db_ip/dspace_db_name dspace-r2rml-mapping.ttl > dspace-r2rml-output.ttl

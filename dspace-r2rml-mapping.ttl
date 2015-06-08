@@ -1,0 +1,724 @@
+@prefix map: <#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix rr: <http://www.w3.org/ns/r2rml#>.
+@prefix vocab: <vocab/>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix dc: <http://purl.org/dc/elements/1.1/>.
+@prefix dcterms: <http://purl.org/dc/terms/>.
+@prefix dctype: <http://purl.org/dc/dcmitype/>.
+@prefix pcdm: <http://pcdm.org/models#>.
+@prefix foaf: <http://xmlns.com/foaf/0.1/>.
+@prefix edm: <http://www.europeana.eu/schemas/edm/>.
+@prefix ore: <http://www.openarchives.org/ore/terms/>.
+
+### DSpace mapping to Portland Common Data Model (PCDM) draft
+### pcdm:object -> DSpace item
+### pcdm:object -> DSpace bitstream object
+### pcdm:file -> DSpace bitstream file
+### item: handle/thehandle
+### bitstream object: bitstream/handle/thehandle
+### bitstream file: filename
+### sequence?
+
+map:items
+    rr:logicalTable <#item-view>;
+    rr:subjectMap [
+        rr:template 'http://sa.library.oregonstate.edu/handle/{"thehandle"}';
+        rr:class pcdm:Object;
+    ];
+	rr:predicateObjectMap [
+      rr:predicate edm:dataProvider;
+      rr:objectMap [ rr:constant 'Oregon State University' ];
+    ];
+	rr:predicateObjectMap [
+      rr:predicate pcdm:hasMember;
+      rr:objectMap [ rr:template 'http://sa.library.oregonstate.edu/handle/{"thehandle"}/bitstream/{"sequence_id"}';
+	  	rr:termType rr:IRI];
+    ].
+
+map:bitstreams
+    rr:logicalTable <#bitstream-view>;
+    rr:subjectMap [
+        rr:template 'http://sa.library.oregonstate.edu/bitstream/handle/{"thehandle"}/{"sequence_id"}';
+        rr:class pcdm:Object;
+    ];
+	rr:predicateObjectMap [
+      rr:predicate edm:dataProvider;
+      rr:objectMap [ rr:constant 'Oregon State University' ];
+    ];
+	rr:predicateObjectMap [
+      rr:predicate pcdm:hasFile;
+      rr:objectMap [ rr:template 'http://sa.library.oregonstate.edu/handle/{"thehandle"}/bitstream/{"sequence_id"}/{"filename"}';
+		rr:termType rr:IRI];
+    ].
+	
+map:files
+    rr:logicalTable <#bitstream-view>;
+    rr:subjectMap [
+        rr:template 'http://sa.library.oregonstate.edu/handle/{"thehandle"}/bitstream/{"sequence_id"}/{"filename"}';
+        rr:class pcdm:File;
+    ];
+    rr:predicateObjectMap [
+      rr:predicate dc:format;
+      rr:objectMap [ rr:column '"mimetype"' ];
+    ];
+	rr:predicateObjectMap [
+      rr:predicate edm:rights;
+      rr:objectMap [ rr:column '"text_value"' ];
+    ].
+	
+map:dc-contributor-advisor
+    rr:logicalTable <#dc-contributor-advisor-view>;
+    rr:subjectMap [
+        rr:template 'http://sa.library.oregonstate.edu/handle/{"handle"}';
+    ];
+    rr:predicateObjectMap [
+        rr:predicate dcterms:contributor;
+        rr:objectMap [ rr:column '"text_value"' ];
+    ].
+
+map:dc-contributor-committeemember
+    rr:logicalTable <#dc-contributor-committeemember-view>;
+    rr:subjectMap [
+        rr:template 'http://sa.library.oregonstate.edu/handle/{"handle"}';
+    ];
+    rr:predicateObjectMap [
+        rr:predicate dcterms:contributor;
+        rr:objectMap [ rr:column '"text_value"' ];
+    ].
+
+map:dc-creator
+    rr:logicalTable <#dc-creator-view>;
+    rr:subjectMap [
+        rr:template 'http://sa.library.oregonstate.edu/handle/{"handle"}';
+    ];
+    rr:predicateObjectMap [
+        rr:predicate dcterms:creator;
+        rr:objectMap [ rr:column '"text_value"' ];
+    ].
+
+map:dc-coverage-spatial
+    rr:logicalTable <#dc-coverage-spatial-view>;
+    rr:subjectMap [
+        rr:template 'http://sa.library.oregonstate.edu/handle/{"handle"}';
+    ];
+    rr:predicateObjectMap [
+        rr:predicate dcterms:spatial;
+        rr:objectMap [ rr:column '"text_value"' ];
+    ].
+
+map:dc-coverage-temporal
+    rr:logicalTable <#dc-coverage-temporal-view>;
+    rr:subjectMap [
+        rr:template 'http://sa.library.oregonstate.edu/handle/{"handle"}';
+    ];
+    rr:predicateObjectMap [
+        rr:predicate dcterms:temporal;
+        rr:objectMap [ rr:column '"text_value"' ];
+    ].
+
+map:dc-date-copyright
+    rr:logicalTable <#dc-date-copyright-view>;
+    rr:subjectMap [
+        rr:template 'http://sa.library.oregonstate.edu/handle/{"handle"}';
+    ];
+    rr:predicateObjectMap [
+        rr:predicate dcterms:dateCopyrighted;
+        rr:objectMap [ rr:column '"text_value"' ];
+    ].
+
+map:dc-date-created
+    rr:logicalTable <#dc-date-created-view>;
+    rr:subjectMap [
+        rr:template 'http://sa.library.oregonstate.edu/handle/{"handle"}';
+    ];
+    rr:predicateObjectMap [
+        rr:predicate dcterms:created;
+        rr:objectMap [ rr:column '"text_value"' ];
+    ].
+
+map:dc-date-issued
+    rr:logicalTable <#dc-date-issued-view>;
+    rr:subjectMap [
+        rr:template 'http://sa.library.oregonstate.edu/handle/{"handle"}';
+    ];
+    rr:predicateObjectMap [
+        rr:predicate dcterms:issued;
+        rr:objectMap [ rr:column '"text_value"' ];
+    ].
+
+map:dc-date-available
+    rr:logicalTable <#dc-date-available-view>;
+    rr:subjectMap [
+        rr:template 'http://sa.library.oregonstate.edu/handle/{"handle"}';
+    ];
+    rr:predicateObjectMap [
+        rr:predicate dcterms:available;
+        rr:objectMap [ rr:column '"text_value"' ];
+    ].
+
+map:dc-date-submitted
+    rr:logicalTable <#dc-date-submitted-view>;
+    rr:subjectMap [
+        rr:template 'http://sa.library.oregonstate.edu/handle/item/{"handle"}';
+    ];
+    rr:predicateObjectMap [
+        rr:predicate dcterms:dateSubmitted;
+        rr:objectMap [ rr:column '"text_value"' ];
+    ].
+
+map:dc-date-updated
+    rr:logicalTable <#dc-date-updated-view>;
+    rr:subjectMap [
+        rr:template 'http://sa.library.oregonstate.edu/handle/item/{"handle"}';
+    ];
+    rr:predicateObjectMap [
+        rr:predicate dcterms:dateUpdated;
+        rr:objectMap [ rr:column '"text_value"' ];
+    ].
+
+
+map:dc-identifier-uri
+    rr:logicalTable <#dc-identifier-uri-view>;
+    rr:subjectMap [
+        rr:template 'http://sa.library.oregonstate.edu/handle/{"handle"}';
+    ];
+    rr:predicateObjectMap [
+        rr:predicate dcterms:identifier;
+        rr:objectMap [ rr:column '"text_value"' ];
+    ].
+
+map:dc-identifier-doi
+    rr:logicalTable <#dc-identifier-doi-view>;
+    rr:subjectMap [
+        rr:template 'http://sa.library.oregonstate.edu/handle/{"handle"}';
+    ];
+    rr:predicateObjectMap [
+        rr:predicate dcterms:identifier;
+        rr:objectMap [ rr:column '"text_value"' ];
+    ].
+
+map:dc-language-iso
+    rr:logicalTable <#dc-language-iso-view>;
+    rr:subjectMap [
+        rr:template 'http://sa.library.oregonstate.edu/handle/{"handle"}';
+    ];
+    rr:predicateObjectMap [
+        rr:predicate dcterms:language;
+        rr:objectMap [ rr:column '"text_value"' ];
+    ].
+
+map:dc-publisher
+    rr:logicalTable <#dc-publisher-view>;
+    rr:subjectMap [
+        rr:template 'http://sa.library.oregonstate.edu/handle/{"handle"}';
+    ];
+    rr:predicateObjectMap [
+        rr:predicate dcterms:publisher;
+        rr:objectMap [ rr:column '"text_value"' ];
+    ].
+
+map:dc-relation-ispartofseries
+    rr:logicalTable <#dc-relation-ispartofseries-view>;
+    rr:subjectMap [
+        rr:template 'http://sa.library.oregonstate.edu/handle/{"handle"}';
+    ];
+    rr:predicateObjectMap [
+        rr:predicate dcterms:isPartOf;
+        rr:objectMap [ rr:column '"text_value"' ];
+    ].
+
+map:dc-rights
+    rr:logicalTable <#dc-rights-view>;
+    rr:subjectMap [
+        rr:template 'http://sa.library.oregonstate.edu/handle/{"handle"}';
+    ];
+    rr:predicateObjectMap [
+        rr:predicate dcterms:license;
+        rr:objectMap [ rr:column '"text_value"' ];
+    ].
+
+map:dc-rights-uri
+    rr:logicalTable <#dc-rights-uri-view>;
+    rr:subjectMap [
+        rr:template 'http://sa.library.oregonstate.edu/handle/{"handle"}';
+    ];
+    rr:predicateObjectMap [
+        rr:predicate dcterms:license;
+        rr:objectMap [ rr:column '"text_value"' ];
+    ].
+
+map:dc-subject
+    rr:logicalTable <#dc-subject-view>;
+    rr:subjectMap [
+        rr:template 'http://sa.library.oregonstate.edu/handle/{"handle"}';
+    ];
+    rr:predicateObjectMap [
+        rr:predicate dcterms:subject;
+        rr:objectMap [ rr:template 'http://id.loc.gov/authorities/classification/{"text_value"}';];
+    ].
+
+map:dc-subject-lcsh
+    rr:logicalTable <#dc-subject-lcsh-view>;
+    rr:subjectMap [
+        rr:template 'http://sa.library.oregonstate.edu/handle/{"handle"}';
+    ];
+    rr:predicateObjectMap [
+        rr:predicate dcterms:subject;
+        rr:objectMap [ rr:template 'http://id.loc.gov/authorities/classification/{"text_value"}';];
+    ].
+
+map:dc-title
+    rr:logicalTable <#dc-title-view>;
+    rr:subjectMap [
+        rr:template 'http://sa.library.oregonstate.edu/handle/{"handle"}';
+    ];
+    rr:predicateObjectMap [
+        rr:predicate dcterms:title;
+        rr:objectMap [ rr:column '"text_value"' ];
+    ].
+
+map:dc-type
+    rr:logicalTable <#dc-type-view>;
+    rr:subjectMap [
+        rr:template 'http://sa.library.oregonstate.edu/handle/{"handle"}';
+    ];
+    rr:predicateObjectMap [
+        rr:predicate dcterms:type;
+        rr:objectMap [ rr:column '"text_value"' ];
+    ].
+	
+
+################################################ views ################################################
+
+<#item-view>
+    rr:sqlQuery """
+    SELECT h.handle AS thehandle, i.item_id, b.sequence_id AS sequence_id
+    FROM handle AS h, item AS i, bitstream AS b, item2bundle AS ib, bundle2bitstream AS bb WHERE
+	h.resource_id = ib.item_id AND
+	ib.bundle_id=bb.bundle_id AND
+	bb.bitstream_id = b.bitstream_id AND
+    i.in_archive=TRUE AND
+    h.resource_id=i.item_id AND
+    h.resource_type_id=2
+    """.
+		
+<#bitstream-view>
+    rr:sqlQuery """
+	SELECT h.handle AS thehandle, b.name AS filename, b.sequence_id AS sequence_id, bfr.mimetype AS mimetype, mv.text_value AS text_value FROM
+	handle AS h, item AS i, item2bundle AS ib, bundle AS bundle, bitstream AS b,bundle2bitstream AS bb, metadatavalue AS mv, metadataschemaregistry AS msr, metadatafieldregistry AS mfr, bitstreamformatregistry AS bfr WHERE  
+	h.resource_type_id=2 AND
+	h.resource_id = ib.item_id AND
+	ib.bundle_id=bb.bundle_id AND
+	h.resource_id=i.item_id AND i.withdrawn='f' AND
+	bb.bitstream_id = b.bitstream_id AND
+	b.bitstream_format_id=bfr.bitstream_format_id AND
+	bundle.bundle_id=ib.bundle_id AND
+	bundle.name='ORIGINAL' AND
+	b.deleted = 'f' AND
+	i.in_archive=TRUE AND
+	h.resource_id=i.item_id AND
+	h.resource_type_id=2 AND
+	msr.metadata_schema_id=mfr.metadata_schema_id AND
+	mfr.metadata_field_id=mv.metadata_field_id AND
+	mv.text_value is not null AND
+	i.item_id=mv.item_id AND
+	msr.namespace='http://dublincore.org/documents/dcmi-terms/' AND
+	mfr.element='rights' AND
+	mfr.qualifier IS NULL
+    """.
+
+#<#bitstream-view>
+#	rr:sqlQuery """
+#	SELECT h.handle AS thehandle, b.sequence_id AS sequence_id, bfr.mimetype AS mimetype, mv.text_value AS text_value, b.name AS filename FROM 
+#	handle AS h, item AS i, item2bundle AS ib, bundle2bitstream AS bb, bitstream AS b, community2collection, bundle AS bundle, metadataschemaregistry AS msr, metadatafieldregistry AS mfr, bitstreamformatregistry AS bfr
+#	WHERE h.resource_id = i.item_id AND i.withdrawn = 'f'
+#	AND h.resource_type_id = 2
+#	AND h.resource_id = ib.item_id
+#	AND i.item_id = ib.item_id
+#	AND ib.bundle_id = bb.bundle_id
+#	AND bb.bitstream_id = b.bitstream_id
+#	AND bundle.bundle_id=ib.bundle_id 
+#	AND bundle.name='ORIGINAL' 
+#	AND b.deleted = 'f'
+#	AND msr.metadata_schema_id=mfr.metadata_schema_id 
+#	AND mfr.metadata_field_id=mv.metadata_field_id 
+#	AND mv.text_value is not null
+#	AND i.item_id=mv.item_id	
+#	AND msr.namespace='http://dublincore.org/documents/dcmi-terms/' 
+#	AND mfr.element='rights' 
+#	AND mfr.qualifier IS NULL
+#	AND community2collection.community_id = 10
+#	AND community2collection.collection_id = i.owning_collection
+#	""".
+
+<#dc-contributor-committeemember-view>
+    rr:sqlQuery """
+    SELECT h.handle AS handle, mv.text_value AS text_value
+    FROM handle AS h, item AS i, metadatavalue AS mv, metadataschemaregistry AS msr, metadatafieldregistry AS mfr WHERE
+    i.in_archive=TRUE AND
+    h.resource_id=i.item_id AND
+    h.resource_type_id=2 AND
+    msr.metadata_schema_id=mfr.metadata_schema_id AND
+    mfr.metadata_field_id=mv.metadata_field_id AND
+    mv.text_value is not null AND
+    i.item_id=mv.item_id AND
+    msr.namespace='http://dublincore.org/documents/dcmi-terms/' AND
+    mfr.element='contributor' AND
+	mfr.qualifier = 'committeemember' AND
+    mfr.qualifier IS NULL
+    """.
+
+<#dc-contributor-advisor-view>
+    rr:sqlQuery """
+    SELECT h.handle AS handle, mv.text_value AS text_value
+    FROM handle AS h, item AS i, metadatavalue AS mv, metadataschemaregistry AS msr, metadatafieldregistry AS mfr WHERE
+    i.in_archive=TRUE AND
+    h.resource_id=i.item_id AND
+    h.resource_type_id=2 AND
+    msr.metadata_schema_id=mfr.metadata_schema_id AND
+    mfr.metadata_field_id=mv.metadata_field_id AND
+    mv.text_value is not null AND
+    i.item_id=mv.item_id AND
+    msr.namespace='http://dublincore.org/documents/dcmi-terms/' AND
+    mfr.element='contributor' AND
+    mfr.qualifier='advisor'
+    """.
+
+<#dc-coverage-spatial-view>
+    rr:sqlQuery """
+    SELECT h.handle AS handle, mv.text_value AS text_value
+    FROM handle AS h, item AS i, metadatavalue AS mv, metadataschemaregistry AS msr, metadatafieldregistry AS mfr WHERE
+    i.in_archive=TRUE AND
+    h.resource_id=i.item_id AND
+    h.resource_type_id=2 AND
+    msr.metadata_schema_id=mfr.metadata_schema_id AND
+    mfr.metadata_field_id=mv.metadata_field_id AND
+    mv.text_value is not null AND
+    i.item_id=mv.item_id AND
+    msr.namespace='http://dublincore.org/documents/dcmi-terms/' AND
+    mfr.element='coverage' AND
+    mfr.qualifier='spatial'
+    """.
+
+<#dc-coverage-temporal-view>
+    rr:sqlQuery """
+    SELECT h.handle AS handle, mv.text_value AS text_value
+    FROM handle AS h, item AS i, metadatavalue AS mv, metadataschemaregistry AS msr, metadatafieldregistry AS mfr WHERE
+    i.in_archive=TRUE AND
+    h.resource_id=i.item_id AND
+    h.resource_type_id=2 AND
+    msr.metadata_schema_id=mfr.metadata_schema_id AND
+    mfr.metadata_field_id=mv.metadata_field_id AND
+    mv.text_value is not null AND
+    i.item_id=mv.item_id AND
+    msr.namespace='http://dublincore.org/documents/dcmi-terms/' AND
+    mfr.element='coverage' AND
+    mfr.qualifier='temporal'
+    """.
+
+<#dc-creator-view>
+    rr:sqlQuery """
+    SELECT h.handle AS handle, mv.text_value AS text_value
+    FROM handle AS h, item AS i, metadatavalue AS mv, metadataschemaregistry AS msr, metadatafieldregistry AS mfr WHERE
+    i.in_archive=TRUE AND
+    h.resource_id=i.item_id AND
+    h.resource_type_id=2 AND
+    msr.metadata_schema_id=mfr.metadata_schema_id AND
+    mfr.metadata_field_id=mv.metadata_field_id AND
+    mv.text_value is not null AND
+    i.item_id=mv.item_id AND
+    msr.namespace='http://dublincore.org/documents/dcmi-terms/' AND
+    mfr.element='creator' AND
+    mfr.qualifier IS NULL
+    """.
+
+<#dc-date-accessioned-view>
+    rr:sqlQuery """
+    SELECT h.handle AS handle, mv.text_value AS text_value
+    FROM handle AS h, item AS i, metadatavalue AS mv, metadataschemaregistry AS msr, metadatafieldregistry AS mfr WHERE
+    i.in_archive=TRUE AND
+    h.resource_id=i.item_id AND
+    h.resource_type_id=2 AND
+    msr.metadata_schema_id=mfr.metadata_schema_id AND
+    mfr.metadata_field_id=mv.metadata_field_id AND
+    mv.text_value is not null AND
+    i.item_id=mv.item_id AND
+    msr.namespace='http://dublincore.org/documents/dcmi-terms/' AND
+    mfr.element='date' AND
+    mfr.qualifier='accessioned'
+    """.
+
+<#dc-date-available-view>
+    rr:sqlQuery """
+    SELECT h.handle AS handle, mv.text_value AS text_value
+    FROM handle AS h, item AS i, metadatavalue AS mv, metadataschemaregistry AS msr, metadatafieldregistry AS mfr WHERE
+    i.in_archive=TRUE AND
+    h.resource_id=i.item_id AND
+    h.resource_type_id=2 AND
+    msr.metadata_schema_id=mfr.metadata_schema_id AND
+    mfr.metadata_field_id=mv.metadata_field_id AND
+    mv.text_value is not null AND
+    i.item_id=mv.item_id AND
+    msr.namespace='http://dublincore.org/documents/dcmi-terms/' AND
+    mfr.element='date' AND
+    mfr.qualifier='available'
+    """.
+
+<#dc-date-submitted-view>
+    rr:sqlQuery """
+    SELECT h.handle AS handle, mv.text_value AS text_value
+    FROM handle AS h, item AS i, metadatavalue AS mv, metadataschemaregistry AS msr, metadatafieldregistry AS mfr WHERE
+    i.in_archive=TRUE AND
+    h.resource_id=i.item_id AND
+    h.resource_type_id=2 AND
+    msr.metadata_schema_id=mfr.metadata_schema_id AND
+    mfr.metadata_field_id=mv.metadata_field_id AND
+    mv.text_value is not null AND
+    i.item_id=mv.item_id AND
+    msr.namespace='http://dublincore.org/documents/dcmi-terms/' AND
+    mfr.element='date' AND
+    mfr.qualifier='submitted'
+    """.    
+
+<#dc-date-updated-view>
+    rr:sqlQuery """
+    SELECT h.handle AS handle, mv.text_value AS text_value
+    FROM handle AS h, item AS i, metadatavalue AS mv, metadataschemaregistry AS msr, metadatafieldregistry AS mfr WHERE
+    i.in_archive=TRUE AND
+    h.resource_id=i.item_id AND
+    h.resource_type_id=2 AND
+    msr.metadata_schema_id=mfr.metadata_schema_id AND
+    mfr.metadata_field_id=mv.metadata_field_id AND
+    mv.text_value is not null AND
+    i.item_id=mv.item_id AND
+    msr.namespace='http://dublincore.org/documents/dcmi-terms/' AND
+    mfr.element='date' AND
+    mfr.qualifier='updated'
+    """.    
+	
+<#dc-date-issued-view>
+    rr:sqlQuery """
+    SELECT h.handle AS handle, mv.text_value AS text_value
+    FROM handle AS h, item AS i, metadatavalue AS mv, metadataschemaregistry AS msr, metadatafieldregistry AS mfr WHERE
+    i.in_archive=TRUE AND
+    h.resource_id=i.item_id AND
+    h.resource_type_id=2 AND
+    msr.metadata_schema_id=mfr.metadata_schema_id AND
+    mfr.metadata_field_id=mv.metadata_field_id AND
+    mv.text_value is not null AND
+    i.item_id=mv.item_id AND
+    msr.namespace='http://dublincore.org/documents/dcmi-terms/' AND
+    mfr.element='date' AND
+    mfr.qualifier='issued'
+    """.
+	
+<#dc-date-copyright-view>
+    rr:sqlQuery """
+    SELECT h.handle AS handle, mv.text_value AS text_value
+    FROM handle AS h, item AS i, metadatavalue AS mv, metadataschemaregistry AS msr, metadatafieldregistry AS mfr WHERE
+    i.in_archive=TRUE AND
+    h.resource_id=i.item_id AND
+    h.resource_type_id=2 AND
+    msr.metadata_schema_id=mfr.metadata_schema_id AND
+    mfr.metadata_field_id=mv.metadata_field_id AND
+    mv.text_value is not null AND
+    i.item_id=mv.item_id AND
+    msr.namespace='http://dublincore.org/documents/dcmi-terms/' AND
+    mfr.element='date' AND
+    mfr.qualifier='copyright'
+    """.
+    
+<#dc-date-created-view>
+    rr:sqlQuery """
+    SELECT h.handle AS handle, mv.text_value AS text_value
+    FROM handle AS h, item AS i, metadatavalue AS mv, metadataschemaregistry AS msr, metadatafieldregistry AS mfr WHERE
+    i.in_archive=TRUE AND
+    h.resource_id=i.item_id AND
+    h.resource_type_id=2 AND
+    msr.metadata_schema_id=mfr.metadata_schema_id AND
+    mfr.metadata_field_id=mv.metadata_field_id AND
+    mv.text_value is not null AND
+    i.item_id=mv.item_id AND
+    msr.namespace='http://dublincore.org/documents/dcmi-terms/' AND
+    mfr.element='date' AND
+    mfr.qualifier='created'
+    """.    
+	
+<#dc-identifier-uri-view>
+    rr:sqlQuery """
+    SELECT h.handle AS handle, mv.text_value AS text_value
+    FROM handle AS h, item AS i, metadatavalue AS mv, metadataschemaregistry AS msr, metadatafieldregistry AS mfr WHERE
+    i.in_archive=TRUE AND
+    h.resource_id=i.item_id AND
+    h.resource_type_id=2 AND
+    msr.metadata_schema_id=mfr.metadata_schema_id AND
+    mfr.metadata_field_id=mv.metadata_field_id AND
+    mv.text_value is not null AND
+    i.item_id=mv.item_id AND
+    msr.namespace='http://dublincore.org/documents/dcmi-terms/' AND
+    mfr.element='identifier' AND
+    mfr.qualifier='uri'
+    """.
+
+<#dc-identifier-doi-view>
+    rr:sqlQuery """
+    SELECT h.handle AS handle, mv.text_value AS text_value
+    FROM handle AS h, item AS i, metadatavalue AS mv, metadataschemaregistry AS msr, metadatafieldregistry AS mfr WHERE
+    i.in_archive=TRUE AND
+    h.resource_id=i.item_id AND
+    h.resource_type_id=2 AND
+    msr.metadata_schema_id=mfr.metadata_schema_id AND
+    mfr.metadata_field_id=mv.metadata_field_id AND
+    mv.text_value is not null AND
+    i.item_id=mv.item_id AND
+    msr.namespace='http://dublincore.org/documents/dcmi-terms/' AND
+    mfr.element='identifier' AND
+    mfr.qualifier='doi'
+    """.
+
+<#dc-language-iso-view>
+    rr:sqlQuery """
+    SELECT h.handle AS handle, mv.text_value AS text_value
+    FROM handle AS h, item AS i, metadatavalue AS mv, metadataschemaregistry AS msr, metadatafieldregistry AS mfr WHERE
+    i.in_archive=TRUE AND
+    h.resource_id=i.item_id AND
+    h.resource_type_id=2 AND
+    msr.metadata_schema_id=mfr.metadata_schema_id AND
+    mfr.metadata_field_id=mv.metadata_field_id AND
+    mv.text_value is not null AND
+    i.item_id=mv.item_id AND
+    msr.namespace='http://dublincore.org/documents/dcmi-terms/' AND
+    mfr.element='language' AND
+    mfr.qualifier='iso'
+    """.
+			
+<#dc-publisher-view>
+    rr:sqlQuery """
+    SELECT h.handle AS handle, mv.text_value AS text_value
+    FROM handle AS h, item AS i, metadatavalue AS mv, metadataschemaregistry AS msr, metadatafieldregistry AS mfr WHERE
+    i.in_archive=TRUE AND
+    h.resource_id=i.item_id AND
+    h.resource_type_id=2 AND
+    msr.metadata_schema_id=mfr.metadata_schema_id AND
+    mfr.metadata_field_id=mv.metadata_field_id AND
+    mv.text_value is not null AND
+    i.item_id=mv.item_id AND
+    msr.namespace='http://dublincore.org/documents/dcmi-terms/' AND
+    mfr.element='publisher' AND
+    mfr.qualifier IS NULL
+    """.
+			
+<#dc-relation-ispartofseries-view>
+    rr:sqlQuery """
+    SELECT h.handle AS handle, mv.text_value AS text_value
+    FROM handle AS h, item AS i, metadatavalue AS mv, metadataschemaregistry AS msr, metadatafieldregistry AS mfr WHERE
+    i.in_archive=TRUE AND
+    h.resource_id=i.item_id AND
+    h.resource_type_id=2 AND
+    msr.metadata_schema_id=mfr.metadata_schema_id AND
+    mfr.metadata_field_id=mv.metadata_field_id AND
+    mv.text_value is not null AND
+    i.item_id=mv.item_id AND
+    msr.namespace='http://dublincore.org/documents/dcmi-terms/' AND
+    mfr.element='relation' AND
+    mfr.qualifier='ispartofseries'
+    """.
+						
+<#dc-rights-view>
+    rr:sqlQuery """
+    SELECT h.handle AS handle, mv.text_value AS text_value
+    FROM handle AS h, item AS i, metadatavalue AS mv, metadataschemaregistry AS msr, metadatafieldregistry AS mfr WHERE
+    i.in_archive=TRUE AND
+    h.resource_id=i.item_id AND
+    h.resource_type_id=2 AND
+    msr.metadata_schema_id=mfr.metadata_schema_id AND
+    mfr.metadata_field_id=mv.metadata_field_id AND
+    mv.text_value is not null AND
+    i.item_id=mv.item_id AND
+    msr.namespace='http://dublincore.org/documents/dcmi-terms/' AND
+    mfr.element='rights' AND
+    mfr.qualifier IS NULL
+    """.
+
+<#dc-rights-uri-view>
+    rr:sqlQuery """
+    SELECT h.handle AS handle, mv.text_value AS text_value
+    FROM handle AS h, item AS i, metadatavalue AS mv, metadataschemaregistry AS msr, metadatafieldregistry AS mfr WHERE
+    i.in_archive=TRUE AND
+    h.resource_id=i.item_id AND
+    h.resource_type_id=2 AND
+    msr.metadata_schema_id=mfr.metadata_schema_id AND
+    mfr.metadata_field_id=mv.metadata_field_id AND
+    mv.text_value is not null AND
+    i.item_id=mv.item_id AND
+    msr.namespace='http://dublincore.org/documents/dcmi-terms/' AND
+    mfr.element='rights' AND
+    mfr.qualifier='uri'
+    """.
+
+<#dc-subject-view>
+    rr:sqlQuery """
+    SELECT h.handle AS handle, mv.text_value AS text_value
+    FROM handle AS h, item AS i, metadatavalue AS mv, metadataschemaregistry AS msr, metadatafieldregistry AS mfr WHERE
+    i.in_archive=TRUE AND
+    h.resource_id=i.item_id AND
+    h.resource_type_id=2 AND
+    msr.metadata_schema_id=mfr.metadata_schema_id AND
+    mfr.metadata_field_id=mv.metadata_field_id AND
+    mv.text_value is not null AND
+    i.item_id=mv.item_id AND
+    msr.namespace='http://dublincore.org/documents/dcmi-terms/' AND
+    mfr.element='subject' AND
+    mfr.qualifier IS NULL
+    """.
+    
+<#dc-subject-lcsh-view>
+	rr:sqlQuery """
+	SELECT h.handle AS handle, mv.text_value AS text_value
+	FROM handle AS h, item AS i, metadatavalue AS mv, metadataschemaregistry AS msr, metadatafieldregistry AS mfr WHERE
+	i.in_archive=TRUE AND
+	h.resource_id=i.item_id AND
+	h.resource_type_id=2 AND
+	msr.metadata_schema_id=mfr.metadata_schema_id AND
+	mfr.metadata_field_id=mv.metadata_field_id AND
+	mv.text_value is not null AND
+	i.item_id=mv.item_id AND
+	msr.namespace='http://dublincore.org/documents/dcmi-terms/' AND
+	mfr.element='subject' AND
+	mfr.qualifier='lcsh'
+	""".    
+
+<#dc-type-view>
+    rr:sqlQuery """
+    SELECT h.handle AS handle, mv.text_value AS text_value
+    FROM handle AS h, item AS i, metadatavalue AS mv, metadataschemaregistry AS msr, metadatafieldregistry AS mfr WHERE
+    i.in_archive=TRUE AND
+    h.resource_id=i.item_id AND
+    h.resource_type_id=2 AND
+    msr.metadata_schema_id=mfr.metadata_schema_id AND
+    mfr.metadata_field_id=mv.metadata_field_id AND
+    mv.text_value is not null AND
+    i.item_id=mv.item_id AND
+    msr.namespace='http://dublincore.org/documents/dcmi-terms/' AND
+    mfr.element='type' AND
+    mfr.qualifier IS NULL
+    """.
+	
+<#dc-title-view>
+    rr:sqlQuery """
+    SELECT h.handle AS handle, mv.text_value AS text_value
+    FROM handle AS h, item AS i, metadatavalue AS mv, metadataschemaregistry AS msr, metadatafieldregistry AS mfr WHERE
+    i.in_archive=TRUE AND
+    h.resource_id=i.item_id AND
+    h.resource_type_id=2 AND
+    msr.metadata_schema_id=mfr.metadata_schema_id AND
+    mfr.metadata_field_id=mv.metadata_field_id AND
+    mv.text_value is not null AND
+    i.item_id=mv.item_id AND
+    msr.namespace='http://dublincore.org/documents/dcmi-terms/' AND
+    mfr.element='title' AND
+    mfr.qualifier IS NULL
+    """.
+
